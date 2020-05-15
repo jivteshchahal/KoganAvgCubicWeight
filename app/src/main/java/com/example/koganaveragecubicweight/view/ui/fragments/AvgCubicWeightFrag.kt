@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.koganaveragecubicweight.view.ui.fragments
 
 import android.os.Bundle
@@ -33,9 +35,9 @@ class AvgCubicWeightFrag : Fragment() {
         recyclerView = view.findViewById<RecyclerView>(R.id.rcViewData)
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
-        avgCubicWeightFrag = AvgCubicWeightViewModel()
-        avgCubicWeightFrag.init()
-        avgCubicWeightFrag.getContacts(activity!!, "products/1")
+//        avgCubicWeightFrag = AvgCubicWeightViewModel()
+//        avgCubicWeightFrag.init()
+//        avgCubicWeightFrag.getContacts(activity!!, "products/1")
         return view
     }
 
@@ -43,7 +45,7 @@ class AvgCubicWeightFrag : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(AvgCubicWeightViewModel::class.java)
         viewModel.init()
-        viewModel.getContacts(activity!!, "products/1").observe(activity!!, Observer {
+        viewModel.getContacts(activity!!, "api/products/1").observe(activity!!, Observer {
             for (jsonData in it) {
                 val title = jsonData.title
                 val category = jsonData.category

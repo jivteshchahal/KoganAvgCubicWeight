@@ -11,10 +11,12 @@ import com.example.koganaveragecubicweight.service.model.ObjectContentModel
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
+import java.net.URL
 
 class GetApiRepository {
     private var mutableLiveDataList: MutableLiveData<List<ObjectContentModel>> =
         MutableLiveData<List<ObjectContentModel>>()
+    private var str = ""
 
     companion object {
         private lateinit var instance: GetApiRepository
@@ -28,31 +30,31 @@ class GetApiRepository {
         activity: Activity,
         product: String
     ): MutableLiveData<List<ObjectContentModel>> {
-        val active = activity
-        var url = "http://wp8m3he1wt.s3-website-ap-southeast-2.amazonaws.com/api/$product"
-        Log.e("Url", url)
+
+        val url = URL("http://wp8m3he1wt.s3-website-ap-southeast-2.amazonaws.com/")
+        val urrl = URL(url.toExternalForm() + product)
+        Log.e("Url", urrl.toString())
         val request = StringRequest(
             Request.Method.GET,
-            url,
+            urrl.toString(),
             Response.Listener { response ->
                 val gson = Gson()
                 val listType = object : TypeToken<MutableList<ObjectContentModel>>() {}.type
                 if (response.isNotEmpty()) {
-//                    Log.e("ddddddddddddddddddddddd", response.toString())
                     val je = gson.fromJson(response, JsonObject::class.java)
                     val contentList = gson.fromJson<MutableList<ObjectContentModel>>(
                         je.getAsJsonArray("objects"),
                         listType
                     )
                     mutableLiveDataList.value = contentList
-                    for (jsonData in contentList) {
-                        Log.e("ddddddddddddddddddddddd", jsonData.title)
-
-                    }
                     Log.e("ddddddddddddddddddddddd", je.get("next").toString())
-
+                    if (je.get("next").toString() != "null" && str != je.get("next").toString()
+                    ) {
+                        str = je.get("next").toString()
+                        getVolleyData(activity, str.substring(2, str.length - 1))
+                    }
                 } else {
-
+                    Log.e("Error", "Did not get data from server")
                 }
             },
             Response.ErrorListener {
