@@ -1,4 +1,3 @@
 package com.example.koganaveragecubicweight.service.model
 
-class SizeModel(width:Float, length:Float, height: Float) {
-}
+class SizeModel(val width: Float, val length: Float, val height: Float)

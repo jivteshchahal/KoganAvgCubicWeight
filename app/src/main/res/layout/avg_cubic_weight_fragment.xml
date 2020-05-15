@@ -4,36 +4,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@android:color/background_light"
     android:weightSum="1"
     tools:context=".view.ui.fragments.AvgCubicWeightFrag">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcViewData"
         android:layout_width="match_parent"
-        android:background="@android:color/background_light"
         android:layout_height="0dp"
         android:layout_weight="1" >
     </androidx.recyclerview.widget.RecyclerView>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    style="@style/AppTheme"
-                    android:text="@string/avg_frag_refresh">
-                </Button>
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    style="@style/AppTheme"
-                    android:text="@string/avg_frag_remove">
-                </Button>
-        </LinearLayout>
+    <!--        <LinearLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:orientation="horizontal">-->
+    <!--                <Button-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_gravity="center"-->
+    <!--                    style="@style/AppTheme"-->
+    <!--                    android:text="@string/avg_frag_refresh">-->
+    <!--                </Button>-->
+    <!--                <Button-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_gravity="end"-->
+    <!--                    style="@style/AppTheme"-->
+    <!--                    android:text="@string/avg_frag_remove">-->
+    <!--                </Button>-->
+    <!--        </LinearLayout>-->
 
 
 </LinearLayout>

@@ -9,8 +9,8 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.koganaveragecubicweight.service.model.ObjectContentModel
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
-import java.lang.reflect.Method
 
 class GetApiRepository {
     private var mutableLiveDataList: MutableLiveData<List<ObjectContentModel>> =
@@ -30,7 +30,7 @@ class GetApiRepository {
     ): MutableLiveData<List<ObjectContentModel>> {
         val active = activity
         var url = "http://wp8m3he1wt.s3-website-ap-southeast-2.amazonaws.com/api/$product"
-        Log.e("Url" , url)
+        Log.e("Url", url)
         val request = StringRequest(
             Request.Method.GET,
             url,
@@ -38,7 +38,19 @@ class GetApiRepository {
                 val gson = Gson()
                 val listType = object : TypeToken<MutableList<ObjectContentModel>>() {}.type
                 if (response.isNotEmpty()) {
-                    Log.e("ddddddddddddddddddddddd", response.toString())
+//                    Log.e("ddddddddddddddddddddddd", response.toString())
+                    val je = gson.fromJson(response, JsonObject::class.java)
+                    val contentList = gson.fromJson<MutableList<ObjectContentModel>>(
+                        je.getAsJsonArray("objects"),
+                        listType
+                    )
+                    mutableLiveDataList.value = contentList
+                    for (jsonData in contentList) {
+                        Log.e("ddddddddddddddddddddddd", jsonData.title)
+
+                    }
+                    Log.e("ddddddddddddddddddddddd", je.get("next").toString())
+
                 } else {
 
                 }
@@ -47,25 +59,6 @@ class GetApiRepository {
                 Log.e("Error", "Volley did not work ${it.localizedMessage}")
             }
         )
-//            override fun getBody(): ByteArray {
-//                super.getBody()
-//                val params2 = HashMap<String, String>()
-//                params2["number"] = firebaseUser?.phoneNumber.toString()
-//                return JSONObject(params2 as HashMap<*, *>).toString().toByteArray()
-//            }
-//
-//            @Throws(AuthFailureError::class)
-//            override fun getHeaders(): MutableMap<String, String> {
-//                val params: MutableMap<String, String> =
-//                    HashMap()
-//                params["Content-Type"] = "application/json"
-//                return params
-//            }
-//
-//            override fun getBodyContentType(): String {
-//                return "x-www-form-urlencoded"
-//            }
-
 
         val requestQueue = Volley.newRequestQueue(activity)
         requestQueue.add(request)

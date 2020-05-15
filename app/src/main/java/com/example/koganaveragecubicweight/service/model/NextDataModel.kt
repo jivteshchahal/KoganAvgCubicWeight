@@ -1,4 +1,3 @@
 package com.example.koganaveragecubicweight.service.model
 
-class NextDataModel(next: String) {
-}
+class NextDataModel(val next: String)

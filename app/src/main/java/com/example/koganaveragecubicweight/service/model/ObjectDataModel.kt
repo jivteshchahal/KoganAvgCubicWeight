@@ -1,4 +1,5 @@
 package com.example.koganaveragecubicweight.service.model
 
-class ObjectDataModel(objects:MutableList<ObjectContentModel>) {
-}
+import org.json.JSONArray
+
+class ObjectDataModel(val objects: List<JSONArray>, val next: String)

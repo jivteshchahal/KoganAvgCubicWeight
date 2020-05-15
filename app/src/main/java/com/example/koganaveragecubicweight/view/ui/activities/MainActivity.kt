@@ -1,8 +1,8 @@
 package com.example.koganaveragecubicweight.view.ui.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import com.example.koganaveragecubicweight.R
 import com.example.koganaveragecubicweight.view.ui.fragments.AvgCubicWeightFrag
 
@@ -12,13 +12,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initView()
-        getDataButton.setOnClickListener{
-            supportFragmentManager.beginTransaction().replace(R.id.frag_container, AvgCubicWeightFrag.newInstance())
-                .commit()
-        }
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frag_container, AvgCubicWeightFrag.newInstance())
+            .commit()
+//        getDataButton.setOnClickListener {
+//
+//        }
     }
 
     private fun initView() {
-        getDataButton = findViewById(R.id.btnGetData)
+//        getDataButton = findViewById(R.id.btnGetData)
     }
 }

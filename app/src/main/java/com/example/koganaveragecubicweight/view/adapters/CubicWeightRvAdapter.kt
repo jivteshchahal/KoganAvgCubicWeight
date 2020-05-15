@@ -3,8 +3,6 @@ package com.example.koganaveragecubicweight.view.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.koganaveragecubicweight.R
@@ -27,11 +25,13 @@ class CubicWeightRvAdapter(private val mValues: List<RvDataShowModel>) :
 
     override fun onBindViewHolder(holder: CubicWeightRvAdapter.ViewHolder, position: Int) {
         holder.tvTitle.text = mValues[position].title
-        holder.tvAvgCubicWeight.text =mValues[position].avgCubeVol
+        holder.tvCategory.text = mValues[position].category
+        holder.tvAvgCubicWeight.text = mValues[position].avgCubeVol
     }
 
     inner class ViewHolder(mView: View) : RecyclerView.ViewHolder(mView) {
         val tvTitle: TextView = mView.findViewById(R.id.tvTitle)
+        val tvCategory: TextView = mView.findViewById(R.id.tvCategory)
         val tvAvgCubicWeight: TextView = mView.findViewById(R.id.tvAvgCubeWeight)
     }
 }
