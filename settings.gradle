@@ -1,0 +1,2 @@
+rootProject.name='Kogan Average Cubic Weight'
+include ':app'

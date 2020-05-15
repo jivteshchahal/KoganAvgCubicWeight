@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Kogan Average Cubic Weight</string>
+    <string name="main_activity_get_data">Get Data</string>
+    <string name="avg_frag_refresh">Refresh</string>
+    <string name="avg_frag_remove">Remove Fragment</string>
+</resources>
