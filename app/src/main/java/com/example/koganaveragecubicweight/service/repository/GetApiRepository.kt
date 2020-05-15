@@ -43,19 +43,29 @@ class GetApiRepository {
                 val gson = Gson()
                 val listType = object : TypeToken<MutableList<ObjectContentModel>>() {}.type
                 if (response.isNotEmpty()) {
-                    val je = gson.fromJson(response, JsonObject::class.java)
-                    val contentList = gson.fromJson<MutableList<ObjectContentModel>>(
-                        je.getAsJsonArray(activity.getString(R.string.api_object)),
-                        listType
-                    )
-                    mutableLiveDataList.value = contentList
-                    if (je.get(activity.getString(R.string.api_next))
-                            .toString() != activity.getString(
-                            R.string.api_str_null
-                        ) && str != je.get(activity.getString(R.string.api_next)).toString()
-                    ) {
-                        str = je.get(activity.getString(R.string.api_next)).toString()
-                        getVolleyData(activity, str.substring(2, str.length - 1))
+                    try {
+
+
+                        val je = gson.fromJson(response, JsonObject::class.java)
+                        val contentList = gson.fromJson<MutableList<ObjectContentModel>>(
+                            je.getAsJsonArray(activity.getString(R.string.api_object)),
+                            listType
+                        )
+                        mutableLiveDataList.value = contentList
+                        if (je.get(activity.getString(R.string.api_next))
+                                .toString() != activity.getString(
+                                R.string.api_str_null
+                            ) && str != je.get(activity.getString(R.string.api_next)).toString()
+                        ) {
+                            str = je.get(activity.getString(R.string.api_next)).toString()
+                            getVolleyData(activity, str.substring(2, str.length - 1))
+                        }
+                    } catch (e: Exception) {
+                        Toast.makeText(
+                            activity,
+                            activity.getString(R.string.api_error_msg),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 } else {
                     Toast.makeText(
