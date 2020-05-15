@@ -24,12 +24,14 @@ class CubicWeightRvAdapter(private val mValues: List<RvDataShowModel>) :
     }
 
     override fun onBindViewHolder(holder: CubicWeightRvAdapter.ViewHolder, position: Int) {
+        //set data
         holder.tvTitle.text = mValues[position].title
         holder.tvCategory.text = mValues[position].category
         holder.tvAvgCubicWeight.text = mValues[position].avgCubeVol
     }
 
     inner class ViewHolder(mView: View) : RecyclerView.ViewHolder(mView) {
+        //view fetch
         val tvTitle: TextView = mView.findViewById(R.id.tvTitle)
         val tvCategory: TextView = mView.findViewById(R.id.tvCategory)
         val tvAvgCubicWeight: TextView = mView.findViewById(R.id.tvAvgCubeWeight)

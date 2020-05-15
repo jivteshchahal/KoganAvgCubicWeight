@@ -13,6 +13,7 @@ class AvgCubicWeightViewModel : ViewModel() {
         getApiRepository = GetApiRepository.getInstance()
     }
 
+    // live data repository
     fun getContacts(activity: Activity, productListNumber:String): LiveData<List<ObjectContentModel>> {
         return getApiRepository.getVolleyData(activity, productListNumber)
     }

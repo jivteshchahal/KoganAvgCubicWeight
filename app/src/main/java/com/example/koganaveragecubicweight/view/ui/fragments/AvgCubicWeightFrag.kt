@@ -26,45 +26,49 @@ class AvgCubicWeightFrag : Fragment() {
         fun newInstance() = AvgCubicWeightFrag()
     }
 
+    //init View
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.avg_cubic_weight_fragment, container, false)
-        recyclerView = view.findViewById<RecyclerView>(R.id.rcViewData)
+        recyclerView = view.findViewById(R.id.rcViewData)
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
         return view
     }
 
+    //getData from view model
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(AvgCubicWeightViewModel::class.java)
         viewModel.init()
+        // observing Live Data
         viewModel.getContacts(activity!!, getString(R.string.api_ul_postfix))
             .observe(activity!!, Observer {
                 for (jsonData in it) {
                     val title = jsonData.title
                     val category = jsonData.category
-//                    val weight = jsonData.weight
+                    //val weight = jsonData.weight
                     val width = jsonData.size.width
                     val length = jsonData.size.length
                     val height = jsonData.size.height
-                    val volume = (width / 10) * (length / 10) * (height / 10)
-                    if (category == "Air Conditioners") {
+                    val volume =
+                        (width / 10) * (length / 10) * (height / 10)   // conversion of cm to m
+                    if (category == getString(R.string.Avg_cubic_frag_category)) {
                         val cubicWeight = (volume * 250)
                         dataList.add(
                             RvDataShowModel(
                                 title,
                                 category,
-                                cubicWeight.toString() + "kg"
+                                "$cubicWeight kg"
                             )
                         )
                     }
                 }
+                //data set in View
                 mAdapter = CubicWeightRvAdapter(dataList)
                 recyclerView.adapter = mAdapter
             })
-
     }
 }
