@@ -6,4 +6,10 @@
     <string name="frag_item_tv_title">Title:  </string>
     <string name="frag_item_tv_category">Category: </string>
     <string name="frag_item_tv_average_cubic_weight">Average Cubic Weight:  </string>
+    <string name="api_url">http://wp8m3he1wt.s3-website-ap-southeast-2.amazonaws.com/</string>
+    <string name="api_object">objects</string>
+    <string name="api_next">next</string>
+    <string name="api_error_msg">Server not Responding</string>
+    <string name="api_str_null">null</string>
+    <string name="api_ul_postfix">api/products/1</string>
 </resources>

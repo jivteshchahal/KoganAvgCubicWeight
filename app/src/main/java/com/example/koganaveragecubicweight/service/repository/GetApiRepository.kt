@@ -2,11 +2,13 @@ package com.example.koganaveragecubicweight.service.repository
 
 import android.app.Activity
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.koganaveragecubicweight.R
 import com.example.koganaveragecubicweight.service.model.ObjectContentModel
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -31,9 +33,8 @@ class GetApiRepository {
         product: String
     ): MutableLiveData<List<ObjectContentModel>> {
 
-        val url = URL("http://wp8m3he1wt.s3-website-ap-southeast-2.amazonaws.com/")
+        val url = URL(activity.getString(R.string.api_url))
         val urrl = URL(url.toExternalForm() + product)
-        Log.e("Url", urrl.toString())
         val request = StringRequest(
             Request.Method.GET,
             urrl.toString(),
@@ -43,22 +44,33 @@ class GetApiRepository {
                 if (response.isNotEmpty()) {
                     val je = gson.fromJson(response, JsonObject::class.java)
                     val contentList = gson.fromJson<MutableList<ObjectContentModel>>(
-                        je.getAsJsonArray("objects"),
+                        je.getAsJsonArray(activity.getString(R.string.api_object)),
                         listType
                     )
                     mutableLiveDataList.value = contentList
-                    Log.e("ddddddddddddddddddddddd", je.get("next").toString())
-                    if (je.get("next").toString() != "null" && str != je.get("next").toString()
+                    if (je.get(activity.getString(R.string.api_next))
+                            .toString() != activity.getString(
+                            R.string.api_str_null
+                        ) && str != je.get(activity.getString(R.string.api_next)).toString()
                     ) {
-                        str = je.get("next").toString()
+                        str = je.get(activity.getString(R.string.api_next)).toString()
                         getVolleyData(activity, str.substring(2, str.length - 1))
                     }
                 } else {
-                    Log.e("Error", "Did not get data from server")
+                    Toast.makeText(
+                        activity,
+                        activity.getString(R.string.api_error_msg),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             },
             Response.ErrorListener {
                 Log.e("Error", "Volley did not work ${it.localizedMessage}")
+                Toast.makeText(
+                    activity,
+                    activity.getString(R.string.api_error_msg),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         )
 

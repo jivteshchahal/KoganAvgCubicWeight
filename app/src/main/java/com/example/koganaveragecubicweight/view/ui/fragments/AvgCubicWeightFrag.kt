@@ -18,10 +18,9 @@ import com.example.koganaveragecubicweight.viewModel.AvgCubicWeightViewModel
 
 class AvgCubicWeightFrag : Fragment() {
     private lateinit var viewModel: AvgCubicWeightViewModel
-    private val dataList: MutableList<RvDataShowModel> = ArrayList<RvDataShowModel>()
+    private val dataList: MutableList<RvDataShowModel> = ArrayList()
     private lateinit var mAdapter: CubicWeightRvAdapter
     private lateinit var recyclerView: RecyclerView
-    private lateinit var avgCubicWeightFrag: AvgCubicWeightViewModel
 
     companion object {
         fun newInstance() = AvgCubicWeightFrag()
@@ -35,9 +34,6 @@ class AvgCubicWeightFrag : Fragment() {
         recyclerView = view.findViewById<RecyclerView>(R.id.rcViewData)
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
-//        avgCubicWeightFrag = AvgCubicWeightViewModel()
-//        avgCubicWeightFrag.init()
-//        avgCubicWeightFrag.getContacts(activity!!, "products/1")
         return view
     }
 
@@ -45,21 +41,30 @@ class AvgCubicWeightFrag : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(AvgCubicWeightViewModel::class.java)
         viewModel.init()
-        viewModel.getContacts(activity!!, "api/products/1").observe(activity!!, Observer {
-            for (jsonData in it) {
-                val title = jsonData.title
-                val category = jsonData.category
-                val weight = jsonData.weight
-                val width = jsonData.size.width
-                val length = jsonData.size.length
-                val height = jsonData.size.height
-                val size = width * length * height
-                val volume = size / weight
-                dataList.add(RvDataShowModel(title, category, volume.toString()))
-            }
-            mAdapter = CubicWeightRvAdapter(dataList)
-            recyclerView.adapter = mAdapter
-        })
+        viewModel.getContacts(activity!!, getString(R.string.api_ul_postfix))
+            .observe(activity!!, Observer {
+                for (jsonData in it) {
+                    val title = jsonData.title
+                    val category = jsonData.category
+//                    val weight = jsonData.weight
+                    val width = jsonData.size.width
+                    val length = jsonData.size.length
+                    val height = jsonData.size.height
+                    val volume = (width / 10) * (length / 10) * (height / 10)
+                    if (category == "Air Conditioners") {
+                        val cubicWeight = (volume * 250)
+                        dataList.add(
+                            RvDataShowModel(
+                                title,
+                                category,
+                                cubicWeight.toString() + "kg"
+                            )
+                        )
+                    }
+                }
+                mAdapter = CubicWeightRvAdapter(dataList)
+                recyclerView.adapter = mAdapter
+            })
 
     }
 }
